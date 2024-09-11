@@ -21,14 +21,14 @@ const Home: NextPage = () => {
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>Learn NextJS | Easy Frontend</title>
+				<title>Learn NextJS </title>
 				<meta name="description" content="Learn NextJS + Typescript with fun :P" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					Welcome to <a href="https://youtube.com/easyfrontend">Easy Frontend</a>
+					Welcome to <a href="#">NextJS</a>
 				</h1>
 
 				<p className={styles.description}>

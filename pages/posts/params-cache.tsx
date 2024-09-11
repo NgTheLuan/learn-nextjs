@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext } from 'next'
 import { useRouter } from 'next/dist/client/router'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export interface ParamsPageProps {
 	query: any
