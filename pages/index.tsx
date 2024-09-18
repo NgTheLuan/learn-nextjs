@@ -1,11 +1,12 @@
-import type { NextPage } from 'next'
+import { MainLayout } from '@/components/layout'
+import { NextPageWithLayout } from '@/models/common'
 import { useRouter } from 'next/dist/client/router'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
 	const router = useRouter()
 
 	function goToDetailPage() {
@@ -21,14 +22,14 @@ const Home: NextPage = () => {
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>Learn NextJS </title>
+				<title>Learn NextJS | Easy Frontend</title>
 				<meta name="description" content="Learn NextJS + Typescript with fun :P" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
 			<main className={styles.main}>
 				<h1 className={styles.title}>
-					Welcome to <a href="#">NextJS</a>
+					Welcome to <a href="https://youtube.com/easyfrontend">Easy Frontend</a>
 				</h1>
 
 				<p className={styles.description}>
@@ -84,5 +85,7 @@ const Home: NextPage = () => {
 		</div>
 	)
 }
+
+Home.Layout = MainLayout
 
 export default Home

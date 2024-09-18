@@ -1,26 +1,27 @@
-import { useAuth } from '@/hooks/index'
+import { useAuth } from '@/hooks/use-auth'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-export interface AuthProps {
+interface AuthProps {
 	children: any
 }
 
 export function Auth({ children }: AuthProps) {
-	const { profile, loading } = useAuth()
+	const { data, loading } = useAuth()
+
 	const router = useRouter()
 
 	useEffect(() => {
-		if (!loading && !profile?.username) {
+		if (!loading && data === undefined) {
 			router.push('/login')
 		}
-	}, [profile, loading, router])
+	}, [data, loading, router])
 
-	if (!profile?.username) return <p>Loading...</p>
+	if (loading || data === undefined) return <p>Loading...</p>
 
 	return (
 		<div>
-			{profile && <p>{JSON.stringify(profile, null, 2)}</p>}
+			{data && <p>{JSON.stringify(data, null, 2)}</p>}
 			{children}
 		</div>
 	)

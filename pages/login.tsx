@@ -1,10 +1,10 @@
-// import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/use-auth'
 import authApi from 'api-client/auth-api'
 import { useRouter } from 'next/router'
 
 export default function LoginPage() {
 	const router = useRouter()
-	// const { mutate, login } = useAuth({ revalidateOnMount: false })
+	const { mutate, login } = useAuth({ revalidateOnMount: false })
 
 	async function handleGetProfileClick() {
 		try {
@@ -18,7 +18,7 @@ export default function LoginPage() {
 
 	async function handleLogoutClick() {
 		try {
-			// await authApi.logout()
+			await authApi.logout()
 		} catch (error) {
 			console.log('failed to logout', error)
 		}
@@ -26,10 +26,7 @@ export default function LoginPage() {
 
 	async function handleLoginClick() {
 		try {
-			await authApi.login({
-				username: 'test1',
-				password: '123123',
-			})
+			await login()
 			router.push('/about')
 		} catch (error) {
 			console.log('failed to login', error)
