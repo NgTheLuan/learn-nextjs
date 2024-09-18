@@ -10,16 +10,14 @@ export function MainLayout({ children }: LayoutProps) {
 	}, [])
 
 	return (
-		<div>
-			<h1>Main Layout</h1>
+		<div style={{ margin: 40 }}>
+			<h1>Learn NextJS</h1>
 
-			<Link href="/">
-				<a>Home</a>
-			</Link>
-
-			<Link href="/about">
-				<a>About</a>
-			</Link>
+			<div>
+				<Link href="/login">
+					<a>Login</a>
+				</Link>
+			</div>
 
 			<div>{children}</div>
 		</div>
