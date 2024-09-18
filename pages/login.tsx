@@ -4,7 +4,24 @@ import { useRouter } from 'next/router'
 
 export default function LoginPage() {
 	const router = useRouter()
-	const { mutate, login } = useAuth({ revalidateOnMount: false })
+	const { login, logout } = useAuth({ revalidateOnMount: false })
+
+	async function handleLoginClick() {
+		try {
+			await login()
+			router.push('/about')
+		} catch (error) {
+			console.log('failed to login', error)
+		}
+	}
+
+	async function handleLogoutClick() {
+		try {
+			await logout()
+		} catch (error) {
+			console.log('failed to logout', error)
+		}
+	}
 
 	async function handleGetProfileClick() {
 		try {
@@ -14,23 +31,6 @@ export default function LoginPage() {
 				console.log('failed to get profile', error)
 			}
 		} catch (error) {}
-	}
-
-	async function handleLogoutClick() {
-		try {
-			await authApi.logout()
-		} catch (error) {
-			console.log('failed to logout', error)
-		}
-	}
-
-	async function handleLoginClick() {
-		try {
-			await login()
-			router.push('/about')
-		} catch (error) {
-			console.log('failed to login', error)
-		}
 	}
 
 	function goToAbout() {
