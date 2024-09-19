@@ -1,4 +1,5 @@
 import { useAuth } from '@/hooks/use-auth'
+import { Typography } from '@mui/material'
 import authApi from 'api-client/auth-api'
 import { useRouter } from 'next/router'
 
@@ -42,7 +43,7 @@ export default function LoginPage() {
 
 	return (
 		<div style={{ margin: 40 }}>
-			<h1>Login Page</h1>
+			<Typography variant="h5">Login Page</Typography>
 			<div style={{ display: 'flex', gap: 10 }}>
 				<button onClick={handleLoginClick}>Login</button>
 				<button onClick={handleLogoutClick}>Logout</button>

@@ -1,13 +1,16 @@
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/models/common'
+import { Box, Typography } from '@mui/material'
+import Link from 'next/link'
 
 const Home: NextPageWithLayout = () => {
 	return (
-		<div>
-			<title>Learn NextJS</title>
-			<meta name="description" content="Learn NextJS + Typescript with fun :P" />
-			<link rel="icon" href="/favicon.ico" />
-		</div>
+		<Box display="flex" flexDirection="column">
+			<Typography variant="h5">Home Page</Typography>
+			<Link href="/login">
+				<a>Login</a>
+			</Link>
+		</Box>
 	)
 }
 

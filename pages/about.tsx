@@ -1,4 +1,4 @@
-import Header from '@/components/common/header'
+import { Header } from '@/components/common'
 import { AdminLayout } from '@/components/layout'
 import { useAuth } from '@/hooks/use-auth'
 import { Box, Typography } from '@mui/material'
