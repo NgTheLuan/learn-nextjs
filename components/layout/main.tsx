@@ -13,10 +13,16 @@ export function MainLayout({ children }: LayoutProps) {
 		<div style={{ margin: 40 }}>
 			<h1>Learn NextJS</h1>
 
-			<div>
+			<div style={{ display: 'flex', gap: 10 }}>
 				<Link href="/login">
 					<a>Login</a>
 				</Link>
+
+				<div>
+					<Link href="/about">
+						<a>About</a>
+					</Link>
+				</div>
 			</div>
 
 			<div>{children}</div>

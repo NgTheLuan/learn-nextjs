@@ -36,14 +36,20 @@ export default function LoginPage() {
 	function goToAbout() {
 		router.push('/about')
 	}
+	function goToHome() {
+		router.push('/')
+	}
 
 	return (
-		<div>
+		<div style={{ margin: 40 }}>
 			<h1>Login Page</h1>
-			<button onClick={handleLoginClick}>Login</button>
-			<button onClick={handleGetProfileClick}>Get profile</button>
-			<button onClick={goToAbout}>Go to About</button>
-			<button onClick={handleLogoutClick}>Logout</button>
+			<div style={{ display: 'flex', gap: 10 }}>
+				<button onClick={handleLoginClick}>Login</button>
+				<button onClick={handleLogoutClick}>Logout</button>
+				<button onClick={handleGetProfileClick}>Get profile</button>
+				<button onClick={goToAbout}>Go to About</button>
+				<button onClick={goToHome}>Go to Home</button>
+			</div>
 		</div>
 	)
 }

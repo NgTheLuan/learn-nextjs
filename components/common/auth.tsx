@@ -7,21 +7,21 @@ interface AuthProps {
 }
 
 export function Auth({ children }: AuthProps) {
-	const { data, loading } = useAuth()
+	const { data, firstLoading } = useAuth()
 
 	const router = useRouter()
 
 	useEffect(() => {
-		if (!loading && data === undefined) {
+		if (!firstLoading && !data) {
 			router.push('/login')
 		}
-	}, [data, loading, router])
+	}, [router, data, firstLoading])
 
-	if (loading || data === undefined) return <p>Loading...</p>
+	if (firstLoading || !data) return <p>Loading...</p>
 
 	return (
-		<div>
-			{data && <p>{JSON.stringify(data, null, 2)}</p>}
+		<div style={{ margin: 40 }}>
+			{data && <p style={{ padding: '0 40px' }}>{JSON.stringify(data, null, 2)}</p>}
 			{children}
 		</div>
 	)

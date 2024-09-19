@@ -18,20 +18,23 @@ export function AdminLayout({ children }: LayoutProps) {
 
 	return (
 		<Auth>
-			<h1>Admin Layout</h1>
-			<div>Sidebar</div>
+			<div style={{ margin: 40 }}>
+				<h1>Admin Layout</h1>
 
-			<Link href="/">
-				<a>Home</a>
-			</Link>
+				<div style={{ display: 'flex', gap: 10 }}>
+					<Link href="/">
+						<a>Home</a>
+					</Link>
 
-			<Link href="/about">
-				<a>About</a>
-			</Link>
+					<Link href="/about">
+						<a>About</a>
+					</Link>
 
-			<button onClick={handleLogout}>Logout</button>
+					<button onClick={handleLogout}>Logout</button>
+				</div>
 
-			<div>{children}</div>
+				<div>{children}</div>
+			</div>
 		</Auth>
 	)
 }

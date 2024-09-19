@@ -10,7 +10,9 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
 		...options,
 	})
 
-	const loading = !data && !error
+	const firstLoading = data === undefined && error
+
+	console.log({ data, error })
 
 	async function login() {
 		await authApi.login({
@@ -18,18 +20,18 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
 			password: '123123',
 		})
 
-		await mutate(null, true)
+		await mutate()
 	}
 
 	async function logout() {
 		await authApi.logout()
-		mutate({}, false) // clear data & not call API again
+		mutate(null, false) // clear data & not call API again
 	}
 
 	return {
 		data,
 		error,
-		loading: loading,
+		firstLoading,
 		mutate,
 		login,
 		logout,
