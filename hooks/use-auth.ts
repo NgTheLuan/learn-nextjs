@@ -1,6 +1,6 @@
 import authApi from 'api-client/auth-api'
 import useSWR from 'swr'
-import { PublicConfiguration } from 'swr/dist/types'
+import { PublicConfiguration } from 'swr/_internal'
 
 export function useAuth(options?: Partial<PublicConfiguration>) {
 	const { data, error, mutate } = useSWR('/profile', {
