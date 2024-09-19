@@ -1,13 +1,9 @@
 import Header from '@/components/common/header'
 import { AdminLayout } from '@/components/layout'
 import { useAuth } from '@/hooks/use-auth'
+import { Box, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-// import dynamic from 'next/dynamic'
-
-const STATIC_PROFILE = { username: 'test' }
-
-// const Header = dynamic(() => import('@/components/common/header'), { ssr: false })
 
 export interface AboutPageProps {}
 
@@ -54,8 +50,10 @@ export default function AboutPage(props: AboutPageProps) {
 	}
 
 	return (
-		<div>
-			<h1>About Page</h1>
+		<Box>
+			<Typography variant="h3" component="h1" color={'primary'}>
+				About Page
+			</Typography>
 
 			<Header />
 
@@ -67,7 +65,7 @@ export default function AboutPage(props: AboutPageProps) {
 
 			<button onClick={handleNextClick}>Next page</button>
 			<button onClick={handleMutateProfile}>mutate profile</button>
-		</div>
+		</Box>
 	)
 }
 
