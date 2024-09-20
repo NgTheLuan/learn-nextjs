@@ -1,3 +1,4 @@
+import { Footer, Header } from '@/components/common'
 import { Auth } from '@/components/common/auth'
 import { useAuth } from '@/hooks/use-auth'
 import { LayoutProps } from '@/models/index'
@@ -18,6 +19,7 @@ export function AdminLayout({ children }: LayoutProps) {
 
 	return (
 		<Auth>
+			<Header />
 			<div style={{ margin: 40 }}>
 				<h1>Admin Layout</h1>
 
@@ -35,6 +37,7 @@ export function AdminLayout({ children }: LayoutProps) {
 
 				<div>{children}</div>
 			</div>
+			<Footer />
 		</Auth>
 	)
 }

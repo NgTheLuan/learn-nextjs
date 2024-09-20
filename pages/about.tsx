@@ -1,4 +1,3 @@
-import { Header } from '@/components/common'
 import { AdminLayout } from '@/components/layout'
 import { useAuth } from '@/hooks/use-auth'
 import { Box, Typography } from '@mui/material'
@@ -54,14 +53,6 @@ export default function AboutPage(props: AboutPageProps) {
 			<Typography variant="h3" component="h1" color={'primary'}>
 				About Page
 			</Typography>
-
-			<Header />
-
-			<ul className="post-list">
-				{postList.map((post: any) => (
-					<li key={post.id}>{post.title}</li>
-				))}
-			</ul>
 
 			<button onClick={handleNextClick}>Next page</button>
 			<button onClick={handleMutateProfile}>mutate profile</button>

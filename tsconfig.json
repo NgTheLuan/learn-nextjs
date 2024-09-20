@@ -22,7 +22,8 @@
 			"@/models/*": ["./models/*"],
 			"@/api/*": ["./api-client/*"],
 			"@/utils/*": ["./utils/*"],
-			"@/common/*": ["./common/*"]
+			"@/common/*": ["./common/*"],
+			"@/images/*": ["./images/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

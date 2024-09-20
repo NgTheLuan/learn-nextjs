@@ -1,8 +1,9 @@
+import { Post } from '@/models/post'
 import { Box, Divider, Stack, Typography } from '@mui/material'
 import { format } from 'date-fns'
 
 export interface PostItemProps {
-	post: any
+	post: Post
 }
 
 export function PostItem({ post }: PostItemProps) {

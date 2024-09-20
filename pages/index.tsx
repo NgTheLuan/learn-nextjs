@@ -1,3 +1,4 @@
+import { Hero, RecentPost } from '@/components/home'
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/models/common'
 import { Box, Typography } from '@mui/material'
@@ -10,6 +11,9 @@ const Home: NextPageWithLayout = () => {
 			<Link href="/login">
 				<a>Login</a>
 			</Link>
+
+			<Hero />
+			<RecentPost />
 		</Box>
 	)
 }
