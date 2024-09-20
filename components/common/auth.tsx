@@ -21,8 +21,8 @@ export function Auth({ children }: AuthProps) {
 
 	return (
 		<div style={{ margin: 40 }}>
-			{data && <p style={{ padding: '0 40px' }}>{JSON.stringify(data, null, 2)}</p>}
 			{children}
+			{data && <p style={{ padding: '0 40px' }}>{JSON.stringify(data, null, 2)}</p>}
 		</div>
 	)
 }

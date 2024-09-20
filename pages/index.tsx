@@ -1,19 +1,14 @@
-import { Hero, RecentPost } from '@/components/home'
+import { FeatureWorks, HeroSection, RecentPost } from '@/components/home'
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/models/common'
-import { Box, Typography } from '@mui/material'
-import Link from 'next/link'
+import { Box } from '@mui/material'
 
 const Home: NextPageWithLayout = () => {
 	return (
 		<Box display="flex" flexDirection="column">
-			<Typography variant="h5">Home Page</Typography>
-			<Link href="/login">
-				<a>Login</a>
-			</Link>
-
-			<Hero />
+			<HeroSection />
 			<RecentPost />
+			<FeatureWorks />
 		</Box>
 	)
 }

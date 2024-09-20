@@ -18,3 +18,16 @@ export const ROUTE_LIST: Route[] = [
 		path: '/blog',
 	},
 ]
+
+export function encodeUrl(str: string): string {
+	const base64 =
+		typeof window !== 'undefined' ? window.btoa(str) : Buffer.from(str).toString('base64')
+	return encodeURIComponent(base64)
+}
+
+export function decodeUrl(str: string): string {
+	const base64 = decodeURIComponent(str)
+	return typeof window !== 'undefined'
+		? window.atob(base64)
+		: Buffer.from(base64, 'base64').toString()
+}
