@@ -1,4 +1,4 @@
-import { ROUTE_LIST } from '@/utils/utils'
+import { ROUTE_LIST } from '@/utils/index'
 import { Box, Link as MuiLink, Stack } from '@mui/material'
 import clsx from 'clsx'
 import Link from 'next/link'

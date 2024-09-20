@@ -1,5 +1,5 @@
 import { PostCard } from '@/components/home'
-import { Post } from '@/models/index'
+import { Post } from '@/models'
 import { Box, Container, Link as MuiLink, Stack, Typography } from '@mui/material'
 import Link from 'next/link'
 

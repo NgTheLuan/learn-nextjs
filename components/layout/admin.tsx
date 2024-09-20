@@ -1,7 +1,7 @@
 import { Footer, Header } from '@/components/common'
 import { Auth } from '@/components/common/auth'
 import { useAuth } from '@/hooks/use-auth'
-import { LayoutProps } from '@/models/index'
+import { LayoutProps } from '@/models'
 import Link from 'next/link'
 import router from 'next/router'
 
