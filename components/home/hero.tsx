@@ -1,6 +1,6 @@
+import avatar from '@/images/avatar.jpg'
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
-// import avatar from '@/images/avatar.jpg'
-// import Image from 'next/image'
+import Image from 'next/image'
 
 export default function HeroSection() {
 	return (
@@ -14,8 +14,8 @@ export default function HeroSection() {
 				>
 					<Box component="section" pt={{ xs: 4, md: 18 }} pb={{ xs: 7, md: 9 }}>
 						<Typography component="h1" variant="h3" fontWeight="bold" mb={{ xs: 3.5, md: 5 }}>
-							{/* Hi, I am Luan, <br />
-							Web Developer */}
+							Hi, I am Shiba, <br />
+							Web Developer
 						</Typography>
 
 						<Typography mb={{ xs: 3.5, md: 5 }}>
@@ -37,7 +37,7 @@ export default function HeroSection() {
 							borderRadius: '50%',
 						}}
 					>
-						{/* <Image src={avatar} layout="responsive" alt="avatar" /> */}
+						<Image src={avatar} layout="responsive" alt="avatar" />
 					</Box>
 				</Stack>
 			</Container>
