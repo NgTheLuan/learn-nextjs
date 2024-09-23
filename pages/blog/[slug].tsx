@@ -26,7 +26,7 @@ export default function PostDetailPage({ post }: BlogPageProps) {
 		<Box>
 			<Seo
 				data={{
-					title: `${post.title} | Easy Frontend Blog`,
+					title: `${post.title}`,
 					description: post.description,
 					url: `${process.env.HOST_URL}/blog/${post.slug}`,
 					thumbnailUrl:
@@ -48,13 +48,9 @@ export default function PostDetailPage({ post }: BlogPageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	// const postList = await getPostList()
-	// return {
-	// 	paths: postList.map((post: Post) => ({ params: { slug: post.slug } })),
-	// 	fallback: false,
-	// }
+	const postList = await getPostList()
 	return {
-		paths: [],
+		paths: postList.map((post: Post) => ({ params: { slug: post.slug } })),
 		fallback: false,
 	}
 }
