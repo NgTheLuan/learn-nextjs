@@ -14,10 +14,10 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
 
 	console.log({ data, error })
 
-	async function login() {
+	async function login(username: string, password: string) {
 		await authApi.login({
-			username: 'luan_dev',
-			password: '123123',
+			username: username,
+			password: password,
 		})
 
 		await mutate()
