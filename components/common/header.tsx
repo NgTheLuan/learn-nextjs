@@ -10,12 +10,14 @@ export default function Header() {
 	const { data, logout } = useAuth()
 	const isLoggedIn = Boolean(data?.username)
 
+	const routeList = ROUTE_LIST.filter((route) => !route.requireLogin || isLoggedIn)
+
 	return (
 		<>
 			{/* Header Desktop */}
 			<Box display={{ xs: 'none', lg: 'block' }} py={2}>
 				<Stack direction="row" justifyContent="flex-end" paddingX={4}>
-					{ROUTE_LIST.map((item) => {
+					{routeList.map((item) => {
 						return (
 							<Link key={item.path} href={item.path}>
 								<MuiLink

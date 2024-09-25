@@ -64,6 +64,7 @@ export const ROUTE_LIST: Route[] = [
 	{
 		label: 'Works',
 		path: '/works?_page=1&_limit=3',
+		requireLogin: true,
 	},
 	{
 		label: 'Blog',
