@@ -1,7 +1,7 @@
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks/use-auth'
 import { LoginPayload } from '@/models'
-import { Typography } from '@mui/material'
+import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 export default function LoginPage() {
@@ -45,9 +45,23 @@ export default function LoginPage() {
 	}
 
 	return (
-		<div style={{ margin: 40 }}>
-			<Typography variant="h5">Login Page</Typography>
-			<LoginForm OnSubmit={handleLogin} />
-		</div>
+		<Box>
+			<Paper
+				elevation={4}
+				sx={{
+					m: 'auto',
+					marginTop: 8,
+					marginBottom: 8,
+					padding: 4,
+					maxWidth: 500,
+					textAlign: 'center',
+				}}
+			>
+				<Typography component="h1" variant="h5">
+					Login Page
+				</Typography>
+				<LoginForm OnSubmit={handleLogin} />
+			</Paper>
+		</Box>
 	)
 }

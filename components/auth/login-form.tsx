@@ -34,7 +34,7 @@ export default function LoginForm({ OnSubmit }: LoginFormProps) {
 	})
 
 	return (
-		<Box component="form" onSubmit={handleSubmit(OnSubmit)} sx={{ height: '100vh' }}>
+		<Box component="form" onSubmit={handleSubmit(OnSubmit)}>
 			<InputField
 				label="Username"
 				name="username"
@@ -64,6 +64,7 @@ export default function LoginForm({ OnSubmit }: LoginFormProps) {
 			<Button
 				type="submit"
 				variant="contained"
+				fullWidth
 				sx={{
 					my: 1,
 				}}
