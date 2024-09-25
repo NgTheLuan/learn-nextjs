@@ -1,5 +1,6 @@
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks/use-auth'
+import { LoginPayload } from '@/models'
 import { Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
@@ -34,10 +35,19 @@ export default function LoginPage() {
 	// 	} catch (error) {}
 	// }
 
+	async function handleLogin(e: LoginPayload) {
+		try {
+			await login(e.username, e.password)
+			router.push('/about')
+		} catch (error) {
+			console.log('failed to login', error)
+		}
+	}
+
 	return (
 		<div style={{ margin: 40 }}>
 			<Typography variant="h5">Login Page</Typography>
-			<LoginForm />
+			<LoginForm OnSubmit={handleLogin} />
 		</div>
 	)
 }

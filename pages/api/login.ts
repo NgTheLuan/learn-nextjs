@@ -34,6 +34,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 			// End streaming data to NextJS
 			proxyRes.on('end', function () {
 				try {
+					// Check when call API login failed -> not call other API
+					const isSuccess =
+						proxyRes.statusCode && proxyRes.statusCode >= 200 && proxyRes.statusCode < 300
+					if (!isSuccess) {
+						;(res as NextApiResponse).status(500).json(body)
+						return resolve(true)
+					}
+
 					const { accessToken, expiredAt } = JSON.parse(body)
 
 					// convert token to cookies
@@ -43,8 +51,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 						sameSite: 'lax',
 						expires: new Date(expiredAt),
 					})
-
-					console.log('accessToken', accessToken)
 					;(res as NextApiResponse).status(200).json({ message: 'login successfully' })
 				} catch (error) {
 					;(res as NextApiResponse).status(500).json({ message: 'something went wrong' })

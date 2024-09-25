@@ -12,7 +12,7 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
 
 	const firstLoading = data === undefined && error
 
-	console.log({ data, error })
+	console.log(data)
 
 	async function login(username: string, password: string) {
 		await authApi.login({

@@ -1,35 +1,40 @@
 import { InputField } from '@/components/form'
-import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Box, Button, IconButton, InputAdornment } from '@mui/material'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
 
-export default function LoginForm() {
-	const router = useRouter()
-	const { login, logout } = useAuth({ revalidateOnMount: false })
-	const { control, handleSubmit } = useForm({
+interface LoginFormProps {
+	OnSubmit: (payload: LoginPayload) => void
+}
+
+export default function LoginForm({ OnSubmit }: LoginFormProps) {
+	const [showPassword, setShowPassword] = useState<boolean>(false)
+
+	const schemaForm = yup.object().shape({
+		username: yup
+			.string()
+			.required('Please input your username')
+			.min(4, 'Username must be at least 4 characters'),
+		password: yup
+			.string()
+			.required('Please input your password')
+			.min(6, 'Password must be at least 6 characters'),
+	})
+
+	const { control, handleSubmit } = useForm<LoginPayload>({
 		defaultValues: {
 			username: '',
 			password: '',
 		},
+		resolver: yupResolver(schemaForm),
 	})
 
-	async function handleLogin(e: LoginPayload) {
-		try {
-			await login(e.username, e.password)
-			router.push('/about')
-		} catch (error) {
-			console.log('failed to login', error)
-		}
-	}
-
-	const [showPassword, setShowPassword] = useState<boolean>(false)
-
 	return (
-		<Box component="form" onSubmit={handleSubmit(handleLogin)} sx={{ height: '100vh' }}>
+		<Box component="form" onSubmit={handleSubmit(OnSubmit)} sx={{ height: '100vh' }}>
 			<InputField
 				label="Username"
 				name="username"
