@@ -2,7 +2,7 @@ import { InputField } from '@/components/form'
 import { LoginPayload } from '@/models'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Box, Button, IconButton, InputAdornment } from '@mui/material'
+import { Box, Button, CircularProgress, IconButton, InputAdornment } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -25,13 +25,19 @@ export default function LoginForm({ OnSubmit }: LoginFormProps) {
 			.min(6, 'Password must be at least 6 characters'),
 	})
 
-	const { control, handleSubmit } = useForm<LoginPayload>({
+	const {
+		control,
+		handleSubmit,
+		formState: { isSubmitting },
+	} = useForm<LoginPayload>({
 		defaultValues: {
 			username: '',
 			password: '',
 		},
 		resolver: yupResolver(schemaForm),
 	})
+
+	console.log('isSubmitting', isSubmitting)
 
 	return (
 		<Box component="form" onSubmit={handleSubmit(OnSubmit)}>
@@ -68,6 +74,8 @@ export default function LoginForm({ OnSubmit }: LoginFormProps) {
 				sx={{
 					my: 1,
 				}}
+				disabled={isSubmitting}
+				startIcon={isSubmitting ? <CircularProgress color="inherit" size={20} /> : null}
 			>
 				Login
 			</Button>
