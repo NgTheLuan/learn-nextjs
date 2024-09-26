@@ -1,6 +1,5 @@
 import avatar from '@/images/avatar.jpg'
-import { Box, Button, Container, Stack, Typography } from '@mui/material'
-import Image from 'next/image'
+import { Avatar, Box, Button, Container, Stack, Typography } from '@mui/material'
 
 export default function HeroSection() {
 	return (
@@ -37,7 +36,11 @@ export default function HeroSection() {
 							borderRadius: '50%',
 						}}
 					>
-						<Image src={avatar} layout="responsive" alt="avatar" />
+						<Avatar
+							alt="avatar"
+							src={avatar.src}
+							sx={{ borderRadius: '50%', width: 240, height: 240 }}
+						/>
 					</Box>
 				</Stack>
 			</Container>

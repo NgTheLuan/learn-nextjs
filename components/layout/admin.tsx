@@ -31,8 +31,6 @@ export function AdminLayout({ children }: LayoutProps) {
 					<Link href="/about">
 						<a>About</a>
 					</Link>
-
-					<button onClick={handleLogout}>Logout</button>
 				</div>
 
 				<div>{children}</div>
