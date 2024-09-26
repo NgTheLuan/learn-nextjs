@@ -1,9 +1,10 @@
+import { UserProfile } from '@/models'
 import authApi from 'api-client/auth-api'
 import useSWR from 'swr'
-import { PublicConfiguration } from 'swr/_internal'
+import { SWRConfiguration } from 'swr/_internal'
 
-export function useAuth(options?: Partial<PublicConfiguration>) {
-	const { data, error, mutate } = useSWR('/profile', {
+export function useAuth(options?: Partial<SWRConfiguration>) {
+	const { data, error, mutate } = useSWR<UserProfile | null>('/profile', {
 		dedupingInterval: 60 * 60 * 1000, // 1hour
 		revalidateOnFocus: false, // jump other tab and back not call API
 		revalidateOnMount: true, // auto call API when first load page
