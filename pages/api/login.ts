@@ -1,3 +1,4 @@
+import { AuthKey } from '@/constants'
 import Cookies from 'cookies'
 import httpProxy, { ProxyResCallback } from 'http-proxy'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -46,7 +47,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 					// convert token to cookies
 					const cookies = new Cookies(req, res, { secure: process.env.NODE_ENV !== 'development' })
-					cookies.set('access_token', accessToken, {
+					cookies.set(AuthKey.ACCESS_TOKEN, accessToken, {
 						httpOnly: true,
 						sameSite: 'lax',
 						expires: new Date(expiredAt),

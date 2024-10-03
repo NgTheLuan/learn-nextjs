@@ -4,13 +4,23 @@ import { Box, Link as MuiLink, Stack, Typography } from '@mui/material'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 export default function Header() {
 	const router = useRouter()
 	const { data, logout } = useAuth()
 	const isLoggedIn = Boolean(data?.username)
 
-	const routeList = ROUTE_LIST.filter((route) => !route.requireLogin || isLoggedIn)
+	/************** Fix : issue text content did not match  **************/
+	const [routeList, setRouteList] = useState(ROUTE_LIST.filter((route) => !route.requireLogin))
+	useEffect(() => {
+		/*
+		 *** server render menu not require login (A)
+		 *** client - first render menu not require login (B)
+		 *** client - check (A)(B) and UseEffect render menu second-time
+		 */
+		setRouteList(ROUTE_LIST.filter((route) => !route.requireLogin) || isLoggedIn)
+	}, [isLoggedIn])
 
 	return (
 		<>

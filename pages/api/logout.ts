@@ -1,3 +1,4 @@
+import { AuthKey } from '@/constants'
 import Cookies from 'cookies'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -17,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 	}
 
 	const cookies = new Cookies(req, res)
-	cookies.set('access_token')
+	cookies.set(AuthKey.ACCESS_TOKEN)
 
 	res.status(200).json({ message: 'logout successfully' })
 }
