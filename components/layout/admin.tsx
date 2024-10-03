@@ -1,9 +1,17 @@
-import { Footer, Header } from '@/components/common'
 import { Auth } from '@/components/common/auth'
 import { useAuth } from '@/hooks/use-auth'
 import { LayoutProps } from '@/models'
 import Link from 'next/link'
 import router from 'next/router'
+
+import dynamic from 'next/dynamic'
+
+const Header = dynamic(() => import('@/components/common/header'), {
+	ssr: false,
+})
+const Footer = dynamic(() => import('@/components/common/footer'), {
+	ssr: false,
+})
 
 export function AdminLayout({ children }: LayoutProps) {
 	const { logout } = useAuth()
