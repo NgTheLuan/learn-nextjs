@@ -37,8 +37,6 @@ export default function LoginForm({ OnSubmit }: LoginFormProps) {
 		resolver: yupResolver(schemaForm),
 	})
 
-	console.log('isSubmitting', isSubmitting)
-
 	return (
 		<Box component="form" onSubmit={handleSubmit(OnSubmit)}>
 			<InputField

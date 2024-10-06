@@ -1,5 +1,5 @@
 import { StorageKey } from '@/constants'
-import { UserProfile } from '@/models'
+import { LoginPayload, UserProfile } from '@/models'
 import authApi from 'api-client/auth-api'
 import useSWR from 'swr'
 import { SWRConfiguration } from 'swr/_internal'
@@ -9,7 +9,6 @@ export function useAuth(options?: Partial<SWRConfiguration>) {
 		try {
 			return JSON.parse(localStorage.getItem(StorageKey.USER_INFO) || '')
 		} catch (error) {
-			console.log(error)
 			return null
 		}
 	}
@@ -23,18 +22,17 @@ export function useAuth(options?: Partial<SWRConfiguration>) {
 		onSuccess: (data) => {
 			localStorage.setItem(StorageKey.USER_INFO, JSON.stringify(data))
 		},
-		onError: (error) => {
+		onError: () => {
 			logout()
-			console.log(error)
 		},
 	})
 
 	const firstLoading = data === undefined && error
 
-	async function login(username: string, password: string) {
+	async function login(payload: LoginPayload) {
 		await authApi.login({
-			username: username,
-			password: password,
+			username: payload.username,
+			password: payload.password,
 		})
 
 		await mutate()

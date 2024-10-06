@@ -1,8 +1,10 @@
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks/use-auth'
 import { LoginPayload } from '@/models'
+import { getErrorMessage } from '@/utils'
 import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 export default function LoginPage() {
 	const router = useRouter()
@@ -35,12 +37,14 @@ export default function LoginPage() {
 	// 	} catch (error) {}
 	// }
 
-	async function handleLogin(e: LoginPayload) {
+	async function handleLogin(payload: LoginPayload) {
 		try {
-			await login(e.username, e.password)
+			await login(payload)
 			router.push('/about')
-		} catch (error) {
-			console.log('failed to login', error)
+		} catch (error: unknown) {
+			const message = getErrorMessage(error) as any
+			console.log('message', message)
+			toast.error(message)
 		}
 	}
 
