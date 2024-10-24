@@ -16,7 +16,7 @@ const useWorkList = ({ params, options }: UseWorkListProp) => {
 			pagination: {
 				_page: 1,
 				_limit: 10,
-				_total: 0,
+				_totalRows: 0,
 			},
 		},
 		keepPreviousData: true, //keep old value when fetching

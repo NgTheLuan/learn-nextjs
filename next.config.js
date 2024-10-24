@@ -2,7 +2,12 @@
 module.exports = {
 	reactStrictMode: true,
 	images: {
-		domains: ['images.unsplash.com', 'placehold.co', 'js-post-api.herokuapp.com'],
+		domains: [
+			'images.unsplash.com',
+			'placehold.co',
+			'js-post-api.herokuapp.com',
+			'res.cloudinary.com',
+		],
 	},
 	webpack(config) {
 		config.resolve.fallback = {
