@@ -7,6 +7,7 @@ module.exports = {
 			'placehold.co',
 			'js-post-api.herokuapp.com',
 			'res.cloudinary.com',
+			'unsplash-assets.imgix.net',
 		],
 	},
 	webpack(config) {

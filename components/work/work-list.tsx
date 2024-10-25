@@ -12,7 +12,7 @@ export interface WorkListProps {
 export default function WorkList({ workList, loading }: WorkListProps) {
 	if (loading)
 		return (
-			<Box>
+			<Box marginY={4}>
 				{Array.from({ length: 3 }).map((_, index) => (
 					<Fragment key={index}>
 						<WorkSkeleton />
@@ -24,10 +24,10 @@ export default function WorkList({ workList, loading }: WorkListProps) {
 
 	if (workList.length === 0)
 		return (
-			<Box textAlign="center" mt={8}>
+			<Box textAlign="center" marginY={4}>
 				<Image
 					src={
-						'https://images.unsplash.com/photo-1725476479171-4728f92dfa9c?q=80&w=500&h=500&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+						'https://unsplash-assets.imgix.net/empty-states/photos.png?auto=format&fit=crop&q=60'
 					}
 					width={150}
 					height={150}
@@ -40,7 +40,7 @@ export default function WorkList({ workList, loading }: WorkListProps) {
 		)
 
 	return (
-		<Box>
+		<Box marginY={4}>
 			{workList.map((work) => (
 				<Fragment key={work.id}>
 					<WorkCard work={work} />

@@ -1,8 +1,8 @@
-import { WorkList } from '@/components/work'
+import { WorkFilters, WorkList } from '@/components/work'
 import { useAuth } from '@/hooks'
 import useWorkList from '@/hooks/use-work-list'
-import { ListParams } from '@/models'
-import { Box, Button, Container, Pagination, Stack, Typography } from '@mui/material'
+import { ListParams, WorkFiltersPayload } from '@/models'
+import { Box, Button, Container, Pagination, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -19,13 +19,44 @@ export default function WorksPage({}: WorksPageProps) {
 	const { _limit, _totalRows, _page } = dataWork?.pagination || {}
 	const totalPages = Boolean(_totalRows) ? Math.ceil(_totalRows! / _limit!) : 0
 
-	console.log('totalPages', totalPages)
+	const filters: Partial<ListParams> = {
+		_page: 1,
+		_limit: 3,
+		...router.query,
+	}
+	const initFiltersPayload: WorkFiltersPayload = {
+		search: filters.title_like || '',
+		selectedTagList: filters.tagList_like?.split('|') || [],
+	}
 
 	function handlePagination(event: React.ChangeEvent<unknown>, value: number) {
 		setFilter((previous) => ({
 			...previous,
 			_page: value,
 		}))
+	}
+
+	function handleFiltersChange(newFilters: WorkFiltersPayload) {
+		// router.push(
+		// 	{
+		// 		pathname: router.pathname,
+		// 		query: {
+		// 			...filters,
+		// 			_page: 1,
+		// 			title_like: newFilters.search,
+		// 			tagList_like: newFilters.tagList_like,
+		// 		},
+		// 	},
+		// 	undefined,
+		// 	{ shallow: true }
+		// )
+
+		setFilter({
+			...filters,
+			_page: 1,
+			title_like: newFilters.search,
+			tagList_like: newFilters.tagList_like,
+		})
 	}
 
 	return (
@@ -42,6 +73,22 @@ export default function WorksPage({}: WorksPageProps) {
 						</Button>
 					)}
 				</Stack>
+
+				{router.isReady ? (
+					<WorkFilters initialValues={initFiltersPayload} onSubmit={handleFiltersChange} />
+				) : (
+					<Skeleton
+						variant="rectangular"
+						height={40}
+						sx={{
+							display: 'inline-block',
+							width: '100%',
+							mt: 2,
+							mb: 1,
+							verticalAlign: 'middle',
+						}}
+					/>
+				)}
 
 				<WorkList workList={dataWork?.data || []} loading={!router.isReady || isLoading} />
 

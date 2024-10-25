@@ -31,5 +31,6 @@ export interface ListResponse<T> {
 export interface ListParams {
 	_page: number
 	_limit: number
-	_total_row: string
+	title_like: string
+	tagList_like: string
 }

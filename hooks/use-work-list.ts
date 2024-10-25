@@ -1,5 +1,5 @@
 import workApi from '@/api-client/work-api'
-import { QueryKeysKey } from '@/constants'
+import { QueryKey } from '@/constants'
 import { ListParams } from '@/models'
 import useSWR, { SWRConfiguration } from 'swr'
 
@@ -9,7 +9,7 @@ export interface UseWorkListProp {
 }
 
 const useWorkList = ({ params, options }: UseWorkListProp) => {
-	const swrResponse = useSWR([QueryKeysKey.GET_WORK_LIST, params], () => workApi.getAll(params), {
+	const swrResponse = useSWR([QueryKey.GET_WORK_LIST, params], () => workApi.getAll(params), {
 		dedupingInterval: 60 * 1000, //30s
 		fallbackData: {
 			data: [],
