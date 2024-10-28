@@ -12,7 +12,7 @@ export interface UseWorkListInfinityProp {
 const useWorkListInfinity = ({ params, options, enabled = true }: UseWorkListInfinityProp) => {
 	const swrResponse = useSWRInfinite<ListResponse<Work>>(
 		(index: number, previousData: ListResponse<Work>) => {
-			if (!enabled) return null
+			if (!enabled) return null // void case call api not params
 
 			// index start at 0
 			const page = index + 1

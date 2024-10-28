@@ -1,7 +1,7 @@
 import { WorkFilters, WorkList } from '@/components/work'
 import { useAuth } from '@/hooks'
 import useWorkListInfinity from '@/hooks/use-work-list-infinity'
-import { ListParams, WorkFiltersPayload } from '@/models'
+import { ListParams, ListResponse, Work, WorkFiltersPayload } from '@/models'
 import { Box, Button, Container, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
@@ -23,7 +23,13 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 		selectedTagList: filters.tagList_like?.split('|') || [],
 	}
 
-	const { data: dataWork, isLoading } = useWorkListInfinity({
+	const {
+		data: dataWork,
+		isLoading,
+		isValidating,
+		size,
+		setSize,
+	} = useWorkListInfinity({
 		params: filters,
 		enabled: router.isReady,
 	})
@@ -44,7 +50,16 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 		)
 	}
 
-	console.log('dataWork', dataWork)
+	/*
+	 * data = [ responsePage1, responsePage2, ...]
+	 * responsePage1 : { data, pagination }
+	 * workList = [...data1,...data2,...dataN ]
+	 */
+	const workList =
+		dataWork?.reduce((result: Work[], currentPage: ListResponse<Work>) => {
+			result.push(...currentPage.data)
+			return result
+		}, []) || []
 
 	return (
 		<Box>
@@ -77,7 +92,11 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 					/>
 				)}
 
-				<WorkList workList={[]} loading={!router.isReady || isLoading} />
+				<WorkList workList={workList} loading={!router.isReady || isLoading} />
+
+				<Button variant="contained" onClick={() => setSize(size + 1)}>
+					Xem thêm
+				</Button>
 			</Container>
 		</Box>
 	)
