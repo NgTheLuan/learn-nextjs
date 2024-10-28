@@ -13,10 +13,8 @@ export type AutocompleteFieldProps<T, K extends FieldValues> = Partial<
 > & {
 	name: Path<K>
 	control: Control<K>
-
 	placeholder?: string
 	label?: string
-
 	options: T[]
 	getOptionLabel: (option: T) => string
 	onChange?: (selectedOptions: T[]) => void

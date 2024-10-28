@@ -49,6 +49,7 @@ export default function WorksPage({}: WorksPageProps) {
 					...filters,
 					_page: 1,
 					title_like: newFilters.search,
+					tagList_like: newFilters.tagList_like,
 				},
 			},
 			undefined,

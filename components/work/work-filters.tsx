@@ -16,7 +16,7 @@ export interface WorkFiltersProps {
 export default function WorkFilters({ initialValues, onSubmit }: WorkFiltersProps) {
 	const schema = yup.object().shape({})
 
-	const { data } = useTagList({})
+	const { data } = useTagList()
 	const tagList = data?.data || []
 
 	const { control, handleSubmit } = useForm<WorkFiltersPayload>({

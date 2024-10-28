@@ -8,7 +8,7 @@ export interface UseTagListProps {
 	options?: SWRConfiguration
 }
 
-export function useTagList({ params = { _page: 1, _limit: 30 }, options }: UseTagListProps) {
+export function useTagList({ params = { _page: 1, _limit: 30 }, options }: UseTagListProps = {}) {
 	const swrResponse = useSWR([QueryKey.GET_TAG_LIST, params], () => tagApi.getAll(params), {
 		dedupingInterval: 30 * 1000, // 30s
 		keepPreviousData: true,
