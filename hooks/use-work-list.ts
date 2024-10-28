@@ -6,22 +6,27 @@ import useSWR, { SWRConfiguration } from 'swr'
 export interface UseWorkListProp {
 	params: Partial<ListParams>
 	options?: SWRConfiguration
+	enabled?: boolean
 }
 
-const useWorkList = ({ params, options }: UseWorkListProp) => {
-	const swrResponse = useSWR([QueryKey.GET_WORK_LIST, params], () => workApi.getAll(params), {
-		dedupingInterval: 60 * 1000, //30s
-		fallbackData: {
-			data: [],
-			pagination: {
-				_page: 1,
-				_limit: 10,
-				_totalRows: 0,
+const useWorkList = ({ params, options, enabled }: UseWorkListProp) => {
+	const swrResponse = useSWR(
+		enabled ? [QueryKey.GET_WORK_LIST, params] : false,
+		() => workApi.getAll(params),
+		{
+			options,
+			dedupingInterval: 60 * 1000, //30s
+			keepPreviousData: true, //keep old value when fetching
+			fallbackData: {
+				data: [],
+				pagination: {
+					_page: 1,
+					_limit: 10,
+					_totalRows: 0,
+				},
 			},
-		},
-		keepPreviousData: true, //keep old value when fetching
-		options,
-	})
+		}
+	)
 	return swrResponse
 }
 
