@@ -1,14 +1,18 @@
 import { WorkFilters, WorkList } from '@/components/work'
 import { useAuth } from '@/hooks'
-import useWorkList from '@/hooks/use-work-list'
+import useWorkListInfinity from '@/hooks/use-work-list-infinity'
 import { ListParams, WorkFiltersPayload } from '@/models'
-import { Box, Button, Container, Pagination, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Button, Container, Skeleton, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
-export interface WorksPageProps {}
+export interface InfinityScrollProps {}
 
-export default function WorksPage({}: WorksPageProps) {
+export default function InfinityScrollPage({}: InfinityScrollProps) {
 	const router = useRouter()
+
+	const { data } = useAuth()
+	const isLoggedIn = Boolean(data?.username)
+
 	const filters: Partial<ListParams> = {
 		_page: 1,
 		_limit: 3,
@@ -19,27 +23,10 @@ export default function WorksPage({}: WorksPageProps) {
 		selectedTagList: filters.tagList_like?.split('|') || [],
 	}
 
-	const { data: dataWork, isLoading } = useWorkList({ params: filters, enabled: router.isReady })
-
-	const { data } = useAuth()
-	const isLoggedIn = Boolean(data?.username)
-
-	const { _limit, _totalRows, _page } = dataWork?.pagination || {}
-	const totalPages = Boolean(_totalRows) ? Math.ceil(_totalRows! / _limit!) : 0
-
-	function handlePagination(event: React.ChangeEvent<unknown>, value: number) {
-		router.push(
-			{
-				pathname: router.pathname,
-				query: {
-					...filters,
-					_page: value,
-				},
-			},
-			undefined,
-			{ shallow: true }
-		)
-	}
+	const { data: dataWork, isLoading } = useWorkListInfinity({
+		params: filters,
+		enabled: router.isReady,
+	})
 
 	function handleFiltersChange(newFilters: WorkFiltersPayload) {
 		router.push(
@@ -56,6 +43,8 @@ export default function WorksPage({}: WorksPageProps) {
 			{ shallow: true }
 		)
 	}
+
+	console.log('dataWork', dataWork)
 
 	return (
 		<Box>
@@ -88,20 +77,8 @@ export default function WorksPage({}: WorksPageProps) {
 					/>
 				)}
 
-				<WorkList workList={dataWork?.data || []} loading={!router.isReady || isLoading} />
-
-				{totalPages > 0 && (
-					<Stack alignItems="center">
-						<Pagination count={totalPages} page={_page} onChange={handlePagination} />
-					</Stack>
-				)}
+				<WorkList workList={[]} loading={!router.isReady || isLoading} />
 			</Container>
 		</Box>
 	)
-}
-
-export async function getStaticProps() {
-	return {
-		props: {},
-	}
 }
