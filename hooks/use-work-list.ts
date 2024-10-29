@@ -15,7 +15,7 @@ const useWorkList = ({ params, options, enabled }: UseWorkListProp) => {
 		() => workApi.getAll(params),
 		{
 			options,
-			dedupingInterval: 60 * 1000, //30s
+			dedupingInterval: 30 * 1000, //30s
 			keepPreviousData: true, //keep old value when fetching
 			fallbackData: {
 				data: [],

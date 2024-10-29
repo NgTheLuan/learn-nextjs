@@ -1,4 +1,5 @@
 export * from './use-auth'
 export * from './use-tags-list'
+export * from './use-work-detail'
 export * from './use-work-list'
 export * from './use-work-list-infinity'
