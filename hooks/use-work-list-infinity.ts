@@ -11,6 +11,7 @@ export interface UseWorkListInfinityProp {
 
 const useWorkListInfinity = ({ params, options, enabled = true }: UseWorkListInfinityProp) => {
 	const swrResponse = useSWRInfinite<ListResponse<Work>>(
+		//getKey
 		(index: number, previousData: ListResponse<Work>) => {
 			if (!enabled) return null // void case call api not params
 
@@ -31,7 +32,9 @@ const useWorkListInfinity = ({ params, options, enabled = true }: UseWorkListInf
 
 			return `/works?${qs.stringify(query)}`
 		},
+		//fetcher
 		(url: string) => axiosClient.get(url),
+		//option
 		{
 			revalidateFirstPage: false,
 			...options,

@@ -2,14 +2,22 @@ import { WorkFilters, WorkList } from '@/components/work'
 import { useAuth } from '@/hooks'
 import useWorkListInfinity from '@/hooks/use-work-list-infinity'
 import { ListParams, ListResponse, Work, WorkFiltersPayload } from '@/models'
-import { Box, Button, Container, Skeleton, Stack, Typography } from '@mui/material'
+import {
+	Box,
+	Button,
+	CircularProgress,
+	Container,
+	Skeleton,
+	Stack,
+	Typography,
+} from '@mui/material'
 import { useRouter } from 'next/router'
+import { useInView } from 'react-intersection-observer'
 
 export interface InfinityScrollProps {}
 
 export default function InfinityScrollPage({}: InfinityScrollProps) {
 	const router = useRouter()
-
 	const { data } = useAuth()
 	const isLoggedIn = Boolean(data?.username)
 
@@ -22,17 +30,6 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 		search: filters.title_like || '',
 		selectedTagList: filters.tagList_like?.split('|') || [],
 	}
-
-	const {
-		data: dataWork,
-		isLoading,
-		isValidating,
-		size,
-		setSize,
-	} = useWorkListInfinity({
-		params: filters,
-		enabled: router.isReady,
-	})
 
 	function handleFiltersChange(newFilters: WorkFiltersPayload) {
 		router.push(
@@ -50,6 +47,17 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 		)
 	}
 
+	const {
+		data: dataWork,
+		isLoading,
+		isValidating,
+		size,
+		setSize,
+	} = useWorkListInfinity({
+		params: filters,
+		enabled: router.isReady,
+	})
+
 	/*
 	 * data = [ responsePage1, responsePage2, ...]
 	 * responsePage1 : { data, pagination }
@@ -60,6 +68,19 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 			result.push(...currentPage.data)
 			return result
 		}, []) || []
+
+	/********** Loadmore with infinity scroll **********/
+	const totalRow = dataWork?.[0]?.pagination?._totalRows || 0
+	const showLoadmore = totalRow > workList?.length!
+	const loadingMore = isValidating && workList?.length! > 0
+
+	const { ref } = useInView({
+		onChange(inView) {
+			if (inView) {
+				setSize((x) => x + 1)
+			}
+		},
+	})
 
 	return (
 		<Box>
@@ -94,9 +115,18 @@ export default function InfinityScrollPage({}: InfinityScrollProps) {
 
 				<WorkList workList={workList} loading={!router.isReady || isLoading} />
 
-				<Button variant="contained" onClick={() => setSize(size + 1)}>
-					Xem thêm
-				</Button>
+				{showLoadmore && (
+					<Box textAlign="center">
+						<Button
+							ref={ref}
+							variant="contained"
+							onClick={() => setSize(size + 1)}
+							disabled={loadingMore}
+						>
+							Xem thêm {loadingMore && <CircularProgress size={18} sx={{ marginLeft: 1 }} />}
+						</Button>
+					</Box>
+				)}
 			</Container>
 		</Box>
 	)
