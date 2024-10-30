@@ -12,10 +12,27 @@ export interface WorkFormProps {
 }
 
 export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
+	const modeUpdate = initialValues?.id
+
 	const schema = yup.object().shape({
 		title: yup.string().required('Title is required'),
 		shortDescription: yup.string().required('Short description is required'),
 		tagList: yup.array().of(yup.string()).min(1, 'Tag list is required'),
+		thumbnail: yup
+			.object()
+			.nullable()
+			.test((value, context) => {
+				//require when add, optional when edit
+				if (Boolean(initialValues?.id) || Boolean(value?.file)) return true
+				return context.createError({
+					message: 'Please select image.',
+				})
+			})
+			.test('test-size', 'Size too large ! Please choose image less than 3MB', (value) => {
+				const MAX_FILE_SIZE = 3 * 1024 * 1024 //limit size to 3MB
+				const fileSize = value?.file?.['size'] || 0
+				return fileSize <= MAX_FILE_SIZE
+			}),
 	})
 
 	const { data } = useTagList()
@@ -36,6 +53,7 @@ export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 			title: '',
 			shortDescription: '',
 			tagList: [],
+			thumbnail: modeUpdate ? { file: null, previewUrl: initialValues.thumbnailUrl } : null,
 			...initialValues,
 		},
 		resolver: yupResolver(schema),
@@ -65,8 +83,8 @@ export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 			<PhotoField name="thumbnail" control={control} />
 
 			<Box textAlign="center" margin={2}>
-				<Button type="submit" variant="contained">
-					{initialValues?.id ? 'Update' : 'Create'}
+				<Button type="submit" variant="outlined">
+					{modeUpdate ? 'Update' : 'Create'}
 				</Button>
 			</Box>
 		</Box>
