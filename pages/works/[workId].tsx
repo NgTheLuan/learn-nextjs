@@ -19,8 +19,6 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 		enabled: router.isReady && !isAddMode,
 	})
 
-	console.log('workDetail', workDetail)
-
 	return (
 		<Box>
 			<Container>
@@ -30,9 +28,7 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 					</Typography>
 				</Stack>
 
-				{(workDetail || Boolean(isAddMode)) && (
-					<WorkForm initialValues={workDetail} onSubmit={() => {}} />
-				)}
+				{(workDetail || Boolean(isAddMode)) && <WorkForm initialValues={workDetail} />}
 			</Container>
 		</Box>
 	)

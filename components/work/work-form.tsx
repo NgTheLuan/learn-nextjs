@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { AutocompleteField, InputField, PhotoField } from '../form'
+import { AutocompleteField, EditorField, InputField, PhotoField } from '../form'
 
 export interface WorkFormProps {
 	initialValues?: Partial<WorkPayload>
@@ -81,6 +81,8 @@ export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 			/>
 
 			<PhotoField name="thumbnail" control={control} />
+
+			<EditorField name="fullDescription" control={control} />
 
 			<Box textAlign="center" margin={2}>
 				<Button type="submit" variant="outlined">

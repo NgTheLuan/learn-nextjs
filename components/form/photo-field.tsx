@@ -23,7 +23,7 @@ export default function PhotoField<T extends FieldValues>({
 		control,
 	})
 
-	const previewUrl = value?.previewUrl || Common.DEFAULT_THUMBNAIL
+	const previewUrl = value?.['previewUrl'] || Common.DEFAULT_THUMBNAIL
 	const inputField = `photo-field-${name}`
 
 	function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
