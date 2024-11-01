@@ -2,6 +2,7 @@ import { WorkForm } from '@/components/work'
 import useWorkDetail from '@/hooks/use-work-detail'
 import { Box, Container, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 
 export interface AddEditWorksPageProps {}
 
@@ -30,6 +31,8 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 
 				{(workDetail || Boolean(isAddMode)) && <WorkForm initialValues={workDetail} />}
 			</Container>
+
+			<Script src="https://widget.cloudinary.com/v2.0/global/all.js" strategy="afterInteractive" />
 		</Box>
 	)
 }
