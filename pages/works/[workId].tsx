@@ -13,17 +13,12 @@ export default function AddEditWorksPage() {
 	const { workId } = router.query
 	const isAddMode = workId === 'add'
 
-	const {
-		data: workDetail,
-		isLoading,
-		error,
-		updateWork,
-	} = useWorkDetail({
+	const addWork = useWorkAdd()
+	const { data: workDetail, updateWork } = useWorkDetail({
 		workId: String(workId),
 		enabled: router.isReady && !isAddMode,
 	})
 
-	const addWork = useWorkAdd()
 	async function handleUpdateSubmit(payload: FormData) {
 		let response = null
 		try {

@@ -1,6 +1,7 @@
 import { useAuth } from '@/hooks/use-auth'
+import { encodeUrl } from '@/utils'
 import { useRouter } from 'next/router'
-import { Fragment, useEffect } from 'react'
+import { useEffect } from 'react'
 
 interface AuthProps {
 	children: any
@@ -16,16 +17,11 @@ export function Auth({ children, requireLogin = false }: AuthProps) {
 		if (!requireLogin) return
 
 		if (!firstLoading && !data) {
-			router.replace('/login')
+			router.replace(`/login?back_to=${encodeUrl(router.asPath)}`)
 		}
 	}, [router, data, firstLoading, requireLogin])
 
 	if (requireLogin && !data) return <p>Loading...</p>
 
-	return (
-		<Fragment>
-			{children}
-			{data && <p style={{ padding: '0 40px' }}>{JSON.stringify(data, null, 2)}</p>}
-		</Fragment>
-	)
+	return <div>{children}</div>
 }

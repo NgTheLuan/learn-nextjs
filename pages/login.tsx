@@ -1,46 +1,20 @@
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks/use-auth'
 import { LoginPayload } from '@/models'
-import { getErrorMessage } from '@/utils'
+import { decodeUrl, getErrorMessage } from '@/utils'
 import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
 
 export default function LoginPage() {
 	const router = useRouter()
-	const { login, logout } = useAuth({ revalidateOnMount: false })
-
-	// async function handleLoginClick() {
-	// 	try {
-	// 		await login()
-	// 		router.push('/about')
-	// 	} catch (error) {
-	// 		console.log('failed to login', error)
-	// 	}
-	// }
-
-	// async function handleLogoutClick() {
-	// 	try {
-	// 		await logout()
-	// 	} catch (error) {
-	// 		console.log('failed to logout', error)
-	// 	}
-	// }
-
-	// async function handleGetProfileClick() {
-	// 	try {
-	// 		try {
-	// 			await authApi.getProfile()
-	// 		} catch (error) {
-	// 			console.log('failed to get profile', error)
-	// 		}
-	// 	} catch (error) {}
-	// }
+	const { login } = useAuth({ revalidateOnMount: false })
 
 	async function handleLogin(payload: LoginPayload) {
 		try {
 			await login(payload)
-			router.push('/about')
+			const backTo = router?.query?.back_to ? decodeUrl(router?.query?.back_to as string) : '/'
+			router.push(backTo)
 		} catch (error: unknown) {
 			const message = getErrorMessage(error) as any
 			console.log('message', message)
