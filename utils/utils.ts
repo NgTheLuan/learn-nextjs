@@ -63,8 +63,7 @@ export const ROUTE_LIST: Route[] = [
 	},
 	{
 		label: 'Works',
-		path: '/works',
-		requireLogin: true,
+		path: '/works?_page=1&_limit=5',
 	},
 	{
 		label: 'Blog',

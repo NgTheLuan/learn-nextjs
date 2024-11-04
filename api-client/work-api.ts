@@ -9,6 +9,22 @@ const workApi = {
 	get(id: string): Promise<Work> {
 		return axiosClient.get(`/works/${id}`)
 	},
+
+	add(payload: FormData): Promise<Work> {
+		return axiosClient.post(`/works`, payload, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		})
+	},
+
+	update(payload: FormData): Promise<Work> {
+		return axiosClient.patch(`/works/${payload.get('id')}`, payload, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		})
+	},
 }
 
 export default workApi

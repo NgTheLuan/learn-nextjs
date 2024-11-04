@@ -47,41 +47,48 @@ export default function EditorField<T extends FieldValues>({
 	const editorRef = useRef(null)
 
 	useEffect(() => {
-		console.log('editor', editorRef)
-	}, [])
+		function initCloudinaryWidget() {
+			// check and retry if cloudinary not ready
+			// @ts-ignore
+			if (!window.cloudinary) {
+				console.log('cloudinary not ready, trigger retry in 500ms')
+				setTimeout(initCloudinaryWidget, 500)
+				return
+			}
+			console.log('cloudinary is ready')
 
-	useEffect(() => {
-		// @ts-ignore no type def support yet
-		const widget = window?.cloudinary?.createUploadWidget(
-			{
-				cloudName: 'ngtheluan',
-				uploadPreset: 'learn-nextjs',
-				multiple: false, // restrict upload to a single file
-				clientAllowedFormats: ['image'], //restrict uploading to image files only
-				maxImageFileSize: 2000000, //restrict file size to less than 2MB
-			},
+			// @ts-ignore no type def support yet
+			const widget = window.cloudinary?.createUploadWidget(
+				{
+					cloudName: 'ngtheluan',
+					uploadPreset: 'learn-nextjs',
+					multiple: false, // restrict upload to a single file
+					clientAllowedFormats: ['image'], //restrict uploading to image files only
+					maxImageFileSize: 2000000, //restrict file size to less than 2MB
+				},
 
-			// @ts-ignore no type support yet
-			(error, result) => {
-				if (!error && result && result.event === 'success') {
-					const quill = editorRef.current // get value
-					// @ts-ignore
-					const range = quill?.getEditorSelection?.() // get position of cursor
-
-					if (quill && range) {
+				// @ts-ignore no type support yet
+				(error, result) => {
+					if (!error && result && result.event === 'success') {
+						const quill = editorRef.current // get value
 						// @ts-ignore
-						quill.getEditor()?.insertEmbed?.(range.index, 'image', result.info?.secure_url)
+						const range = quill?.getEditorSelection?.() // get position of cursor
+
+						if (quill && range) {
+							// @ts-ignore
+							quill.getEditor()?.insertEmbed?.(range.index, 'image', result.info?.secure_url)
+						}
 					}
 				}
-			}
-		)
-		cloudinaryWidgetRef.current = widget
+			)
+			cloudinaryWidgetRef.current = widget
+		}
+		initCloudinaryWidget()
 	}, [])
 
 	const imageHandler = useCallback(() => {
 		// ats-ignore no type supl
 		if (cloudinaryWidgetRef.current) cloudinaryWidgetRef.current.open?.()
-		console.log('select image')
 	}, [])
 
 	const modules = {

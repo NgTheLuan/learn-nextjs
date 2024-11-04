@@ -8,11 +8,13 @@ import { AutocompleteField, EditorField, InputField, PhotoField } from '../form'
 
 export interface WorkFormProps {
 	initialValues?: Partial<WorkPayload>
-	onSubmit?: (payload: Partial<WorkPayload>) => void
+	onSubmit?: (payload: FormData) => void
 }
 
 export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 	const modeUpdate = initialValues?.id
+	const { data } = useTagList()
+	const tagList = data?.data || []
 
 	const schema = yup.object().shape({
 		title: yup.string().required('Title is required'),
@@ -35,19 +37,6 @@ export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 			}),
 	})
 
-	const { data } = useTagList()
-	const tagList = data?.data || []
-
-	async function handleLoginSubmit(payload: WorkPayload) {
-		if (!payload) return
-
-		console.log(payload)
-
-		// payload.tagList_like = payload.selectedTagList?.join('|') || ''
-		// delete payload.selectedTagList
-		// await onSubmit?.(payload)
-	}
-
 	const { control, handleSubmit } = useForm<WorkPayload>({
 		defaultValues: {
 			title: '',
@@ -59,8 +48,39 @@ export default function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 		resolver: yupResolver(schema),
 	})
 
+	async function handleUpdateSubmit(formValues: Partial<WorkPayload>) {
+		if (!formValues) return
+
+		const formData = new FormData()
+		//id
+		if (formValues.id) {
+			formData.set('id', formValues.id)
+		}
+		//thumbnail
+		if (formValues.thumbnail) {
+			formData.set('thumbnail', formValues.thumbnail.file as Blob)
+		}
+		//tagList
+		formValues.tagList?.forEach((item) => {
+			formData.append('tagList', item) // when data type array use append
+		})
+		//title, shortDescription, fullDescription
+		const keyList: Array<keyof Partial<WorkPayload>> = [
+			'title',
+			'shortDescription',
+			'fullDescription',
+		]
+		keyList.forEach((item) => {
+			if (initialValues?.[item] !== formValues[item]) {
+				formData.set(item, formValues[item] as string)
+			}
+		})
+
+		await onSubmit?.(formData)
+	}
+
 	return (
-		<Box component="form" onSubmit={handleSubmit(handleLoginSubmit)}>
+		<Box component="form" onSubmit={handleSubmit(handleUpdateSubmit)}>
 			<InputField label="Title" name="title" placeholder="Input title" control={control} />
 
 			<InputField

@@ -1,8 +1,11 @@
 import { WorkForm } from '@/components/work'
+import useWorkAdd from '@/hooks/use-work-add'
 import useWorkDetail from '@/hooks/use-work-detail'
+import { ROUTE_LIST } from '@/utils'
 import { Box, Container, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
+import { toast } from 'react-toastify'
 
 export interface AddEditWorksPageProps {}
 
@@ -15,10 +18,30 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 		data: workDetail,
 		isLoading,
 		error,
+		updateWork,
 	} = useWorkDetail({
 		workId: String(workId),
 		enabled: router.isReady && !isAddMode,
 	})
+
+	const addWork = useWorkAdd()
+	async function handleUpdateSubmit(payload: FormData) {
+		let response = null
+		try {
+			if (isAddMode) {
+				response = await addWork(payload)
+				toast.success(`Add Work successfully, ID: ${response?.id}`)
+			} else {
+				await updateWork(payload)
+				toast.success('Work updated successfully')
+			}
+
+			//response.id -> navigate to detail page
+			router.push(ROUTE_LIST[1].path) //page work list
+		} catch (error) {
+			toast.error(error)
+		}
+	}
 
 	return (
 		<Box>
@@ -29,7 +52,9 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 					</Typography>
 				</Stack>
 
-				{(workDetail || Boolean(isAddMode)) && <WorkForm initialValues={workDetail} />}
+				{(workDetail || Boolean(isAddMode)) && (
+					<WorkForm initialValues={workDetail} onSubmit={handleUpdateSubmit} />
+				)}
 			</Container>
 
 			<Script src="https://widget.cloudinary.com/v2.0/global/all.js" strategy="afterInteractive" />
