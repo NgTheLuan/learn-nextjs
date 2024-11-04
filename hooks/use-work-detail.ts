@@ -24,6 +24,7 @@ const useWorkDetail = ({ workId, options, enabled }: UseWorkDetailProp) => {
 	async function updateWork(payload: FormData) {
 		const data = await workApi.update(payload)
 		swrResponse.mutate(data) // when update success and auto fech data
+		return data
 	}
 	return { ...swrResponse, updateWork }
 }

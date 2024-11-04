@@ -44,7 +44,7 @@ export default function AddEditWorksPage() {
 			<Container>
 				<Stack mb={4} mt={8} direction="row" alignItems="center" justifyContent="space-between">
 					<Typography component="h1" variant="h3" fontWeight="bold">
-						{isAddMode ? 'Create Work' : 'Update Work'}
+						{isAddMode ? 'Create Work' : `Update Work ID : ${workDetail?.id}`}
 					</Typography>
 				</Stack>
 
