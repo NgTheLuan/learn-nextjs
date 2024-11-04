@@ -21,8 +21,7 @@ export default function WorksPage({}: WorksPageProps) {
 
 	const { data: dataWork, isLoading } = useWorkList({ params: filters, enabled: router.isReady })
 
-	const { data } = useAuth()
-	const isLoggedIn = Boolean(data?.username)
+	const { isLoggedIn } = useAuth()
 
 	const { _limit, _totalRows, _page } = dataWork?.pagination || {}
 	const totalPages = Boolean(_totalRows) ? Math.ceil(_totalRows! / _limit!) : 0

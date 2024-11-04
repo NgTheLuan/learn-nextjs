@@ -1,3 +1,4 @@
+import { Auth } from '@/components/common/auth'
 import { EmptyLayout } from '@/components/layout'
 import { AppPropsWithLayout } from '@/models/common'
 import { createEmotionCache, theme } from '@/utils/index'
@@ -28,7 +29,9 @@ function MyApp({
 				<ToastContainer />
 				<SWRConfig value={{ fetcher: (url) => axiosClient.get(url), shouldRetryOnError: false }}>
 					<Layout>
-						<Component {...pageProps} />
+						<Auth requireLogin={Component.requireLogin ?? false}>
+							<Component {...pageProps} />
+						</Auth>
 					</Layout>
 				</SWRConfig>
 			</ThemeProvider>

@@ -1,3 +1,4 @@
+import { MainLayout } from '@/components/layout'
 import { WorkForm } from '@/components/work'
 import useWorkAdd from '@/hooks/use-work-add'
 import useWorkDetail from '@/hooks/use-work-detail'
@@ -7,9 +8,7 @@ import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { toast } from 'react-toastify'
 
-export interface AddEditWorksPageProps {}
-
-export default function AddEditWorksPage({}: AddEditWorksPageProps) {
+export default function AddEditWorksPage() {
 	const router = useRouter()
 	const { workId } = router.query
 	const isAddMode = workId === 'add'
@@ -43,6 +42,8 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 		}
 	}
 
+	if (!router.isReady) return null
+
 	return (
 		<Box>
 			<Container>
@@ -61,3 +62,6 @@ export default function AddEditWorksPage({}: AddEditWorksPageProps) {
 		</Box>
 	)
 }
+
+AddEditWorksPage.Layout = MainLayout
+AddEditWorksPage.requireLogin = MainLayout

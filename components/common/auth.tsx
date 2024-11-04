@@ -4,20 +4,23 @@ import { Fragment, useEffect } from 'react'
 
 interface AuthProps {
 	children: any
+	requireLogin?: boolean
 }
 
-export function Auth({ children }: AuthProps) {
+export function Auth({ children, requireLogin = false }: AuthProps) {
 	const { data, firstLoading } = useAuth()
 
 	const router = useRouter()
 
 	useEffect(() => {
-		if (!firstLoading && !data) {
-			router.push('/login')
-		}
-	}, [router, data, firstLoading])
+		if (!requireLogin) return
 
-	if (firstLoading || !data) return <p>Loading...</p>
+		if (!firstLoading && !data) {
+			router.replace('/login')
+		}
+	}, [router, data, firstLoading, requireLogin])
+
+	if (requireLogin && !data) return <p>Loading...</p>
 
 	return (
 		<Fragment>
